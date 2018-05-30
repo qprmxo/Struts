@@ -1,21 +1,21 @@
 package studys.form;
 
-import java.sql.Date;
+import org.apache.struts.validator.ValidatorForm;
 
-import org.apache.struts.action.ActionForm;
-
-public class UserForm extends ActionForm{
+public class UserForm extends ValidatorForm{
 
 	private String id;
 	private String pass;
 	private String name;
 	private String kana;
 	
+	private String passCheck;
+	
 	private int no;
-	private Date birth;
+	private String birth;
 	private String club;
 	
-	public UserForm(String id, String name, String kana, Date birth, String club) {
+	public UserForm(String id, String name, String kana, String birth, String club) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -23,7 +23,7 @@ public class UserForm extends ActionForm{
 		this.birth = birth;
 		this.club = club;
 	}
-	public UserForm(String id, String pass, String name, String kana, Date birth, String club) {
+	public UserForm(String id, String pass, String name, String kana, String birth, String club) {
 		super();
 		this.id = id;
 		this.pass = pass;
@@ -65,10 +65,10 @@ public class UserForm extends ActionForm{
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public Date getBirth() {
+	public String getBirth() {
 		return birth;
 	}
-	public void setBirth(Date birth) {
+	public void setBirth(String birth) {
 		this.birth = birth;
 	}
 	public String getClub() {
@@ -77,6 +77,11 @@ public class UserForm extends ActionForm{
 	public void setClub(String club) {
 		this.club = club;
 	}
-	
+	public String getPassCheck() {
+		return passCheck;
+	}
+	public void setPassCheck(String passCheck) {
+		this.passCheck = passCheck;
+	}
 	
 }

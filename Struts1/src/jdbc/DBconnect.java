@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import studys.form.UserForm;
@@ -62,20 +63,99 @@ public class DBconnect {
 	 * @param sql : 実行するsql文
 	 * @return int : 完了した作業の数
 	 */
-	public int updateExec(String sql) {
+	public int insertUser(String id, String pass, String name, String kana) {
 		try {
 			connect();
-			pstmt = con.prepareStatement(sql);
-			int n = pstmt.executeUpdate();
+			pstmt = con.prepareStatement("insert into user1 values(?,?,?,?)");
+			pstmt.setString(1, id);
+			pstmt.setString(2, pass);
+			pstmt.setString(3, name);
+			pstmt.setString(4, kana);
+			return pstmt.executeUpdate();
 			
-			System.out.println("作業完了");
-			return n;
 		}catch(SQLException e) {
 			e.printStackTrace();
-			System.out.println("作業失敗");
+			System.out.println(e.getMessage());
+			return 0;
+			
+		}finally {
+			disconnect();
+		}
+	}
+	public int insertUserdetail(String id, Date date, String club) {
+		try {
+			connect();
+			pstmt = con.prepareStatement("insert into userdetail values(seq_no.nextval,?,?,?)");
+			pstmt.setString(1, id);
+			pstmt.setDate(2, date);
+			pstmt.setString(3, club);
+			return pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
 			return 0;
 		}finally {
 			disconnect();
+		}
+	}
+	public int updateUser(String name, String kana, String id) {
+		try {
+			connect();
+			pstmt = con.prepareStatement("update user1 set name=?, kana=? where id=?");
+			pstmt.setString(1, name);
+			pstmt.setString(2, kana);
+			pstmt.setString(3, id);
+			return pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return 0;
+		}finally {
+			disconnect();
+		}
+	}
+	public int updateUserdetail(Date date, String club, String id) {
+		try {	
+			connect();
+			pstmt = con.prepareStatement("update userdetail set birth=?, club=? where id=?");
+			pstmt.setDate(1, date);
+			pstmt.setString(2, club);
+			pstmt.setString(3, id);
+			return pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return 0;
+		}finally {
+			disconnect();
+		}
+	}
+	public int deleteUser(String id) {
+		try {
+			connect();
+			pstmt = con.prepareStatement("delete from user1 where id=?");
+			pstmt.setString(1, id);
+			return pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return 0;
+		}finally {
+			disconnect();
+		}
+	}
+	public int deleteUserdetail(String id) {
+		try {
+			connect();
+			pstmt = con.prepareStatement("delete from userdetail where id=?");
+			pstmt.setString(1, id);
+			return pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return 0;
 		}
 	}
 	
@@ -124,7 +204,8 @@ public class DBconnect {
 			String pass = rs.getString("pass");
 			String name = rs.getString("name");
 			String kana = rs.getString("kana");
-			Date birth = rs.getDate("birth");
+			Date birthD = rs.getDate("birth");
+			String birth = new SimpleDateFormat("yyyy-MM-dd").format(birthD);
 			String club = rs.getString("club");
 			
 			UserForm userForm = new UserForm(id, pass, name, kana, birth, club);
@@ -167,7 +248,8 @@ public class DBconnect {
 				String id = rs.getString("id");
 				String name = rs.getString("name");
 				String kana = rs.getString("kana");
-				Date birth = rs.getDate("birth");
+				Date birthD = rs.getDate("birth");
+				String birth = new SimpleDateFormat("yyyy-MM-dd").format(birthD);
 				String club = rs.getString("club");
 				
 				UserForm user = new UserForm(id, name, kana, birth, club);

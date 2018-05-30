@@ -7,24 +7,39 @@
 <struts-config>
 
     <form-beans>
-
+		<form-bean name="userForm" type="studys.form.UserForm"/>
+		<form-bean name="loginForm" type="studys.form.LoginForm"/>
+		<form-bean name="searchForm" type="studys.form.SearchForm"/>
     </form-beans>
 
-    <global-exceptions>
-        <!-- sample exception handler
-        <exception
-            key="expired.password"
-            type="app.ExpiredPasswordException"
-            path="/changePassword.jsp"/>
-        end sample -->
-    </global-exceptions>
-
-    <global-forwards>
-        <forward name="welcome" path="/Welcome.do"/>
-    </global-forwards>
-
     <action-mappings>
-           
+    
+		<action path="/login" type="studys.action.LoginAction" name="loginForm" validate="true" input="/main.jsp">
+			<forward name="success" path="/user/search.jsp"/>
+			<forward name="fail" path="/main.jsp"/>
+		</action>
+		
+		<action path="/joinCheck" type="studys.action.JoinAction" name="userForm" validate="true" input="/user/join.jsp">
+			<forward name="idCheck" path="/user/join.jsp"/>
+			<forward name="joinCheck" path="/user/joinCheck.jsp"/>
+			<forward name="search" path="/user/search.jsp"/>
+		</action>
+		
+		<action path="/search" type="studys.action.SearchAction" name="searchForm" validate="true" input="/user/search.jsp">
+			<forward name="search" path="/user/search.jsp"/>
+		</action>
+		
+		<action path="/move" type="studys.action.MoveAction" name="userForm" validate="false">
+			<forward name="updateWrite" path="/user/update.jsp"/>
+			<forward name="deleteCheck" path="/user/delete.jsp"/>
+			<forward name="delete" path="/user/search.jsp"/>
+		</action>
+		
+		<action path="/update" type="studys.action.UpdateAction" name="userForm" validate="true" input="/user/update.jsp">
+			<forward name="updateCheck" path="/user/updateCheck.jsp"/>
+			<forward name="update" path="/user/search.jsp"/>
+		</action>
+		
     </action-mappings>
 
     <message-resources parameter="MessageResources" />

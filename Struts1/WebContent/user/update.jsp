@@ -25,21 +25,12 @@ table td {
 	<div style="color: red;">
 		<html:errors />
 	</div>
-	<h1>新規登録入力画面</h1>
+	<h1>データ変更入力</h1>
 	
-	<html:form action="joinCheck.do" method="post">
+	<html:form action="update.do" method="post">
 		<table>
 			<tr>
-				<th>ID</th><td><html:text name="userForm" property="id"/></td>
-			</tr>
-			<tr>
-				<th colspan="2"><html:submit property="cmd" value="使用できるか確認"/>
-			</tr>
-			<tr>
-				<th>Password</th><td><html:password name="userForm" property="pass"/></td>
-			</tr>
-			<tr>
-				<th>Password再入力</th><td><html:password name="userForm" property="passCheck"/></td>
+				<th>ID</th><td><bean:write name="userForm" property="id"/></td>
 			</tr>
 			<tr>
 				<th>名前</th><td><html:text name="userForm" property="name"/></td>
@@ -54,7 +45,8 @@ table td {
 				<th>委員会</th><td><html:text name="userForm" property="club"/></td>
 			</tr>
 		</table>	
-		<html:submit property="cmd" value="登録します"/>
+		<html:hidden name="userForm" property="pass"/>
+		<html:submit property="cmd" value="確認"/>
 		<button type="button" id="btnBack">戻る</button>
 	</html:form>
 
