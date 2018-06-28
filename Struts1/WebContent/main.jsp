@@ -23,7 +23,7 @@
 				<th>ID</th><td><html:text property="id"/></td>
 			</tr>
 			<tr>
-				<th>Password</th><td><html:text property="pass"/></td>
+				<th>Password</th><td><html:password property="pass"/></td>
 			</tr>
 		</table>
 		
